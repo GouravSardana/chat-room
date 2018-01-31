@@ -3,9 +3,9 @@ import threading
 s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 buff=1024
 host=''
-port=100
+port=33000
 s.bind((host,port))
-client={}
+clients={}
 address={}
 def accept_client():
     while True:
@@ -17,11 +17,13 @@ def accept_client():
 def handle_client(client):
     name=client.recv(buff).decode('utf-8')
     welcome="welcome %s to Gourav Sardana's chat room" %name
-    client.send(bytes(welcome,'utf-8'))
-    client[client]=name
+    client.send(bytes(welcome, "utf8"))
+    msg = "%s has joined the chat!" % name
+    broadcast(bytes(msg, "utf8"))
+    clients[client] = name
     while True:
-        msg=client.recv(buff).decode('utf-8')
-        if msg!= bytes('{quit}', 'utf-8'):
+        msg=client.recv(buff)
+        if msg!= bytes('{quit}', "utf-8"):
             broadcast(msg, name+': ')
         else:
             client.send(bytes('{quit}', 'utf=8'))
@@ -30,7 +32,7 @@ def handle_client(client):
             broadcast("%s has left the chat" %name, 'utf-8')
             break
 def broadcast(msg, prefix=""):
-    for x in client:
+    for x in clients:
         x.send(bytes(prefix, 'utf-8')+msg)
 s.listen(5)
 print("Waiting for connection...")
