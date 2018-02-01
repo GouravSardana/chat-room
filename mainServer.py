@@ -17,9 +17,9 @@ def accept_client():
 def handle_client(client):
     name=client.recv(buff).decode('utf-8')
     welcome="welcome %s to Gourav Sardana's chat room" %name
-    client.send(bytes(welcome, "utf8"))
+    client.send(bytes(welcome, "utf-8"))
     msg = "%s has joined the chat!" % name
-    broadcast(bytes(msg, "utf8"))
+    broadcast(bytes(msg, "utf-8"))
     clients[client] = name
     while True:
         msg=client.recv(buff)
