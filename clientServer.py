@@ -17,7 +17,7 @@ def receive():
             msg_list.insert(tkinter.END, msg)
         except OSError:
             break
-def send():
+def send(event=None):
     msg =my_msg.get()
     my_msg.set("")
     s.send(bytes(msg, "utf-8"))
@@ -34,15 +34,16 @@ msg_frame = tkinter.Frame(top)
 my_msg = tkinter.StringVar()
 my_msg.set("Type your name here")
 scrollbar=tkinter.Scrollbar(msg_frame)
-msg_list=tkinter.Listbox(msg_frame, height=50, width=300, yscrollcommand=scrollbar.set)
+msg_list=tkinter.Listbox(msg_frame, height=30, width=100, yscrollcommand=scrollbar.set)
 scrollbar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
 msg_list.pack(side=tkinter.LEFT, fill = tkinter.BOTH)
 msg_list.pack()
 msg_frame.pack()
 entry_field=tkinter.Entry(top, textvariable=my_msg)
 entry_field.bind("<Return>", send)
+entry_field.pack()
 send_button= tkinter.Button(top, text="Send", command=send)
-quit_button=tkinter.Button(top, text="QUIT", commmand=close)
+quit_button=tkinter.Button(top, text="QUIT",fg="Black", bg="Red", command=close)
 send_button.pack()
 quit_button.pack()
 receive_thread=threading.Thread(target=receive)
