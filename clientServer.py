@@ -26,7 +26,7 @@ def send(event=None):
         top.quit()
 def close():
     s.close()
-    top.quit()
+    top.destroy()
     exit()
 top=tkinter.Tk()
 top.title("Private Chat Room")
