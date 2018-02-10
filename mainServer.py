@@ -32,7 +32,7 @@ def handle_client(client):
             del client[client]
             broadcast("%s has left the chat" %name, 'utf-8')
             break
-def broadcast(msg, prefix=""):
+def broadcast(msg, prefix=""): #for broadcasting msgs to all the client
     for x in clients:
         x.send(bytes(prefix, 'utf-8')+msg)
 s.listen(5)
